@@ -1,12 +1,15 @@
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Feed extends StatefulWidget {
   const Feed({
+    //생성자
     Key? key,
+    required this.imageUrl,
   }) : super(key: key);
+
+  final String imageUrl;
+  //전달받은 후에는 변하지 않음
 
   @override
   State<Feed> createState() => _FeedState();
@@ -14,7 +17,7 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   //좋아요 여부
-  bool isFavorate = false;
+  bool isFavorite = true;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +25,7 @@ class _FeedState extends State<Feed> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Image.network(
-          "https://cdn2.thecatapi.com/images/kat_7kqBi.png",
+          widget.imageUrl,
           height: 400,
           width: double.infinity,
           fit: BoxFit.cover,
@@ -32,10 +35,12 @@ class _FeedState extends State<Feed> {
             IconButton(
               icon: Icon(
                 CupertinoIcons.heart,
-                color: Colors.black,
+                color: isFavorite ? Colors.pink : Colors.black,
               ),
               onPressed: () {
-                // print("cliiked" as num);
+                setState(() {
+                  isFavorite = !isFavorite;
+                });
               },
             ),
             IconButton(
